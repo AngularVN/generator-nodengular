@@ -6,11 +6,17 @@
     }
 }
 
-@nav_bg:                @dark;
+@nav_bg:                @gray-darker;
 @nav_border:            darken(@nav_bg, 10%);
 @sub_nav_bg:            @nav_bg;
 @link_color:            @text-color;
 @link_active_bg:        @brand-primary;
+
+
+@bright:                @gray-lighter;
+@reverse:               @brand-primary;
+@dark:                  @gray-darker;
+@skin:                  @brand-primary;
 
 #nav-container {
     z-index: 11; // should be highter than top header
@@ -291,7 +297,7 @@
             width: 220px;
             background-color: @reverse;
             color: @text-color;
-            border-right: 1px solid @state-default-border;
+            border-right: 1px solid @table-border-color;
         }
 
         > a {
@@ -465,7 +471,7 @@
             float: left;
             padding: 0;
             > li {
-                border-right: 1px solid @state-default-border;
+                border-right: 1px solid @table-border-color;
             }
         }
 

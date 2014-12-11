@@ -134,7 +134,7 @@ angular.module('<%= baseName %>', [
 				templateUrl: 'views/signin.html',
 			})
 			.when("/signout", {
-				resolve: resolve = {
+				resolve: {
 					logout: function($location, securityService) {
 						securityService.destroySession();
 						$location.path("/signin");

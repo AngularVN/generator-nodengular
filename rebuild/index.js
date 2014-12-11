@@ -1,18 +1,13 @@
 'use strict';
-var util = require('util');
-var yeoman = require('yeoman-generator');
-
-
-var NodengularGenerator = yeoman.generators.NamedBase.extend({
-  initializing: function() {
-    this.log('You called the nodengular subgenerator with the argument ' + this.name + '.');
-  },
-
-  writing: function() {
-    this.src.copy('somefile.js', 'somefile.js');
-  }
-});
-
+var util = require('util'),
+  path = require('path'),
+  yeoman = require('yeoman-generator'),
+  yosay = require('yosay'),
+  fs = require('fs'),
+  _ = require('lodash'),
+  _s = require('underscore.string'),
+  pluralize = require('pluralize'),
+  asciify = require('asciify');
 
 var NodengularGenerator = function NodengularGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
@@ -63,7 +58,6 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
   var files = [
     'package.json',
     'bower.json',
-    'composer.json',
     'GruntFile.coffee',
     '.editorconfig',
     '.gitignore',
@@ -79,7 +73,7 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
   });
 
   files.forEach(function(file) {
-    self.copy(template + file, file);
+    self.template(template + file, file);
   });
   this.template(template + '_app.js', 'app.js');
   this.template(template + 'models/_index.js', 'models/index.js');
@@ -101,7 +95,7 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
   this.template(template + 'client/views/_flash.html', 'source/views/flash.html');
   this.template(template + 'client/views/_header.html', 'source/views/header.html');
   this.template(template + 'client/views/_signin.html', 'source/views/signin.html');
-  this.template(template + 'client/views/home/_home.html', 'source/views/home/_home.html');
+  this.template(template + 'client/views/home/_home.html', 'source/views/home/home.html');
 
   _.each(this.entities, function(entity) {
     this.name = entity.name;
