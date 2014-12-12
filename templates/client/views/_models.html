@@ -14,13 +14,13 @@
                             </th>
                             <% _.each(attrs, function (attr) { %>
                             <th>
-                                <%= attr.attrName %>
+                                <%= _.humanize(attr.attrName) %>
                             </th>
                             <% }); %>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="<%= name %> in <%= pluralize(name) %>">
+                        <tr ng-repeat="<%= name %> in items.results">
                             <td>
                                 {{<%= name %>.id}}
                             </td>

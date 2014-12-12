@@ -1,9 +1,9 @@
 
 angular.module('<%= baseName %>')
-  .factory('resource<%= _.classify(name) %>', ['$resource', function ($resource) {
-    return $resource('<%= baseName %>/<%= pluralize(name) %>/:id', {}, {
-      'query': { method: 'GET', isArray: true},
+  .factory('resource<%= _.classify(name) %>', ['$resource', function (a) {
+    return a('<%= baseName %>/<%= pluralize(name) %>/:id', {}, {
       'get': { method: 'GET'},
-      'update': { method: 'PUT'}
+      'update': { method: 'PUT'},
+      'query': { method: 'GET'},
     });
   }]);

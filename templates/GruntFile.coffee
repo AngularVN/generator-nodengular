@@ -253,21 +253,33 @@ module.exports = (grunt) ->
 						"robots.txt"
 						"favicon.ico"
 						"index.php"
-						# bower components that has image, font dependencies
-						"bower_components/font-awesome/css/*"
-						"bower_components/font-awesome/fonts/*"
-						"bower_components/weather-icons/css/*"
-						"bower_components/weather-icons/font/*"
+						# # bower components that has image, font dependencies
+						# "bower_components/font-awesome/css/*"
+						# "bower_components/font-awesome/fonts/*"
+						# "bower_components/weather-icons/css/*"
+						# "bower_components/weather-icons/font/*"
 
-						"fonts/**/*"
-						"i18n/**/*"
-						"images/**/*"
-						"styles/bootstrap/**/*"
-						"styles/fonts/**/*"
-						"styles/img/**/*"
-						"styles/ui/images/**/*"
+						# "fonts/**/*"
+						# "i18n/**/*"
+						# "images/**/*"
+						# "styles/bootstrap/**/*"
+						# "styles/fonts/**/*"
+						# "styles/img/**/*"
+						# "styles/ui/images/**/*"
 						"views/**/*"
 					]
+				,
+					expand: true
+					flatten: true
+					cwd: "<%%= yeoman.app %>"
+					src: ["bower_components/font-awesome/fonts/*", "bower_components/bootstrap/fonts/*"]
+					dest: "<%%= yeoman.dist %>/fonts"
+				,
+					expand: true
+					flatten: true
+					cwd: "<%= yeoman.app %>"
+					dest: "<%= yeoman.dist %>/js"
+					src: ["bower_components/underscore/underscore-min.map"]
 				,
 					expand: true
 					cwd: ".tmp"

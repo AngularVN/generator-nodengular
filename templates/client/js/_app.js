@@ -17,7 +17,7 @@ angular.module('<%= baseName %>', [
 	.constant("DELAY", 5000)
 	.constant("DEFAULT_ROUTE", "/")
 	.constant("REQUIRE_AUTH", "/signin")
-	.constant("VERSION", "© 2014 beesightsoft.com")
+	.constant("VERSION", "© 2014 fb.com/leduongcom")
 
 /**
  * [description]

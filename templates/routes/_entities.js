@@ -8,7 +8,7 @@ exports.findAll = function(req, res) {
         res.jsonp({
           page: page,
           limit: limit,
-          result: entities
+          results: entities
         });
     })
 }

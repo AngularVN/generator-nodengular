@@ -2,7 +2,7 @@ angular.module('<%= baseName %>')
   .controller('<%= _.classify(name) %>Ctrl', ['$scope', '$modal', 'resolved<%= _.classify(name) %>', 'resource<%= _.classify(name) %>',
     function($scope, $modal, resolved<%= _.classify(name) %>, resource<%= _.classify(name) %> ) {
 
-      $scope.<%= pluralize(name) %> = resolved<%= _.classify(name) %>;
+      $scope.items = resolved<%= _.classify(name) %>;
 
       $scope.create = function() {
         $scope.clear();
@@ -19,7 +19,7 @@ angular.module('<%= baseName %>')
       $scope.delete = function(id) { resource<%= _.classify(name) %>.delete({
           id: id
         }, function() {
-          $scope.<%= pluralize(name) %> = resource<%= _.classify(name) %>.query();
+          $scope.items = resource<%= _.classify(name) %>.query();
         });
       };
 
@@ -28,12 +28,12 @@ angular.module('<%= baseName %>')
               id: id
             }, $scope.<%= name %> ,
             function() {
-              $scope.<%= pluralize(name) %> = resource<%= _.classify(name) %>.query();
+              $scope.items = resource<%= _.classify(name) %>.query();
               $scope.clear();
             });
         } else { resource<%= _.classify(name) %>.save($scope.<%= name %> ,
             function() {
-              $scope.<%= pluralize(name) %> = resource<%= _.classify(name) %>.query();
+              $scope.items = resource<%= _.classify(name) %>.query();
               $scope.clear();
             });
         }

@@ -7,13 +7,13 @@
         <title>
             <%= _.capitalize(baseName) %>
         </title>
-        <!-- build:css css/vendor.css -->
-        <link href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
-        <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
-        <!-- endbuild -->
         <!-- build:css({.tmp,client}) css/app.css -->
         <link href="styles/app.css" rel="stylesheet">
-            <!-- endbuild -->
+        <!-- endbuild -->
+        <!-- build:css css/vendor.css -->
+        <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="bower_components/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+        <!-- endbuild -->
         </link>
     </head>
     <body data-custom-background="" data-off-canvas-nav="" id="app" ng-app="<%= baseName %>">
