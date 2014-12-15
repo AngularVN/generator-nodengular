@@ -3,7 +3,7 @@ angular.module('<%= baseName %>')
     function($scope, $modal, PERPAGE, resolved<%= _.classify(name) %>, resource<%= _.classify(name) %> ){
       $scope.perpage = PERPAGE;
       $scope.limit = 0;
-      $scope.q = $scope.sort = $scope.order = "";
+      $scope.q = $scope.sort = $scope.order = '';
       $scope.items = resolved<%= _.classify(name) %>;
 
       $scope.create = function(){
@@ -19,8 +19,8 @@ angular.module('<%= baseName %>')
       };
 
       $scope.delete = function(id){
-        confirm = confirm("Are you sure you want to delete " + name + "?");
-        if confirm {
+        var x = confirm('Are you sure you want to delete <%= _.classify(name) %>?');
+        if (x) {
           resource<%= _.classify(name) %>.delete({
             id: id
           }, function(){
@@ -46,9 +46,7 @@ angular.module('<%= baseName %>')
       };
 
       $scope.clear = function(){
-        $scope.<%= name %> = { <% _.each(attrs, function(attr){ %> "<%= _.underscored(attr.attrName) %>": "", <%
-          }); %> "id": ""
-        };
+        $scope.<%= name %> = {<% _.each(attrs, function(attr){ %> '<%= _.underscored(attr.attrName) %>': '',<%}); %> id: ''};
       };
 
       $scope.open = function(id){
@@ -68,7 +66,7 @@ angular.module('<%= baseName %>')
         $scope.limit = limit;
         $scope.items = resource<%= _.classify(name) %>.query({
           limit: limit,
-          q: $scope.q || ""
+          q: $scope.q || ''
         });
       };
 
@@ -76,7 +74,7 @@ angular.module('<%= baseName %>')
         $scope.items = resource<%= _.classify(name) %>.query({
           page: page,
           limit: $scope.limit || 20,
-          q: $scope.q || ""
+          q: $scope.q || ''
         });
       };
 
@@ -84,7 +82,7 @@ angular.module('<%= baseName %>')
         $scope.items = resource<%= _.classify(name) %>.query({
           page: 1,
           limit: $scope.limit || 20,
-          q: $scope.q || ""
+          q: $scope.q || ''
         });
       };
     }

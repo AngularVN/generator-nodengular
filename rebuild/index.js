@@ -50,21 +50,22 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
     'docs',
     'source',
     'source/js',
+    'source/img',
     'source/views',
     'source/views/home',
     'source/styles-less',
   ];
 
   var files = [
-    'package.json',
-    'bower.json',
-    'GruntFile.coffee',
-    '.editorconfig',
-    '.gitignore',
-    '.jshintrc',
     '.bowerrc',
+    '.jshintrc',
+    '.gitignore',
+    'bower.json',
+    'package.json',
+    '.editorconfig',
+    'GruntFile.coffee',
   ];
-  var template = '../../templates/';
+  var tpl = '../../templates/';
   var sourceJsDir = 'source/js/';
   var sourceLessDir = 'source/styles-less/';
   var self = this;
@@ -73,29 +74,33 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
   });
 
   files.forEach(function(file) {
-    self.template(template + file, file);
+    self.template(tpl + file, file);
   });
-  this.template(template + '_app.js', 'app.js');
-  this.template(template + 'models/_index.js', 'models/index.js');
 
-  this.template(template + 'client/styles-less/_common.less', sourceLessDir + 'common.less');
-  this.template(template + 'client/styles-less/_app.less', sourceLessDir + 'app.less');
+  self.copy(tpl + 'client/img/avatar.jpg', 'source/img/avatar.jpg');
+  self.copy(tpl + 'client/img/checkmark.png', 'source/img/checkmark.png');
+
+  this.template(tpl + '_app.js', 'app.js');
+  this.template(tpl + 'models/_index.js', 'models/index.js');
+
+  this.template(tpl + 'client/styles-less/_common.less', sourceLessDir + 'common.less');
+  this.template(tpl + 'client/styles-less/_app.less', sourceLessDir + 'app.less');
 
   // combo
-  this.template(template + 'client/js/_app.js', sourceJsDir + 'app.js');
-  this.template(template + 'client/js/_filters.js', sourceJsDir + 'filters.js');
-  this.template(template + 'client/js/_services.js', sourceJsDir + 'services.js');
-  this.template(template + 'client/js/_directives.js', sourceJsDir + 'directives.js');
-  this.template(template + 'client/js/_controllers.js', sourceJsDir + 'controllers.js');
-  this.template(template + 'client/js/home/_home-controller.js', sourceJsDir + 'home/home-controller.js');
+  this.template(tpl + 'client/js/_app.js', sourceJsDir + 'app.js');
+  this.template(tpl + 'client/js/_filters.js', sourceJsDir + 'filters.js');
+  this.template(tpl + 'client/js/_services.js', sourceJsDir + 'services.js');
+  this.template(tpl + 'client/js/_directives.js', sourceJsDir + 'directives.js');
+  this.template(tpl + 'client/js/_controllers.js', sourceJsDir + 'controllers.js');
+  this.template(tpl + 'client/js/home/_home-controller.js', sourceJsDir + 'home/home-controller.js');
 
-  this.template(template + 'client/htaccess', 'source/.htaccess');
-  this.template(template + 'client/_index.html', 'source/index.html');
-  this.template(template + 'client/views/_nav.html', 'source/views/nav.html');
-  this.template(template + 'client/views/_flash.html', 'source/views/flash.html');
-  this.template(template + 'client/views/_header.html', 'source/views/header.html');
-  this.template(template + 'client/views/_signin.html', 'source/views/signin.html');
-  this.template(template + 'client/views/home/_home.html', 'source/views/home/home.html');
+  this.template(tpl + 'client/htaccess', 'source/.htaccess');
+  this.template(tpl + 'client/_index.html', 'source/index.html');
+  this.template(tpl + 'client/views/_nav.html', 'source/views/nav.html');
+  this.template(tpl + 'client/views/_flash.html', 'source/views/flash.html');
+  this.template(tpl + 'client/views/_header.html', 'source/views/header.html');
+  this.template(tpl + 'client/views/_signin.html', 'source/views/signin.html');
+  this.template(tpl + 'client/views/home/_home.html', 'source/views/home/home.html');
 
   _.each(this.entities, function(entity) {
     this.name = entity.name;
@@ -106,15 +111,15 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
     this.mkdir(sourceEntityJsDir);
     this.mkdir(sourceEntityViewDir);
 
-    this.template(template + 'models/_entity.js', 'models/' + entity.name.toLowerCase() + '.js');
-    this.template(template + 'routes/_entities.js', 'routes/' + pluralize(entity.name) + '.js');
+    this.template(tpl + 'models/_entity.js', 'models/' + entity.name.toLowerCase() + '.js');
+    this.template(tpl + 'routes/_entities.js', 'routes/' + pluralize(entity.name) + '.js');
 
-    this.template(template + 'client/styles-less/_model.less', sourceLessDir + entity.name.toLowerCase() + '.less');
-    this.template(template + 'client/js/_model-controller.js', sourceEntityJsDir + entity.name + '-controller.js');
-    this.template(template + 'client/js/_model-router.js', sourceEntityJsDir + entity.name + '-router.js');
-    this.template(template + 'client/js/_model-service.js', sourceEntityJsDir + entity.name + '-service.js');
-    this.template(template + 'client/views/_models.html', sourceEntityViewDir + pluralize(entity.name) + '.html');
-    this.template(template + 'client/views/_model-modal.html', sourceEntityViewDir + entity.name + '-modal.html');
+    this.template(tpl + 'client/styles-less/_model.less', sourceLessDir + entity.name.toLowerCase() + '.less');
+    this.template(tpl + 'client/js/_model-controller.js', sourceEntityJsDir + entity.name + '-controller.js');
+    this.template(tpl + 'client/js/_model-router.js', sourceEntityJsDir + entity.name + '-router.js');
+    this.template(tpl + 'client/js/_model-service.js', sourceEntityJsDir + entity.name + '-service.js');
+    this.template(tpl + 'client/views/_models.html', sourceEntityViewDir + pluralize(entity.name) + '.html');
+    this.template(tpl + 'client/views/_model-modal.html', sourceEntityViewDir + entity.name + '-modal.html');
   }.bind(this));
 };
 
