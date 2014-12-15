@@ -12,7 +12,7 @@
                 <input class="form-control" name="id" ng-model="<%= name %>.id" readonly type="text"/>
             </div>
         </div>
-        <% _.each(attrs, function (attr) { %>
+        <% _.each(attrs, function (attr) { if (attr.attrName != "deleted") { %>
         <div class="form-group" ng-class="{'has-error': form.$dirty && form.<%= _.underscored(attr.attrName) %>.$invalid}">
             <label for="<%= _.underscored(attr.attrName) %>" class="col-sm-3 control-label"><%= _.humanize(attr.attrName) %></label>
             <div class="col-sm-9">
@@ -72,7 +72,7 @@
                 } %>
             </div>
         </div>
-        <% }); %>
+        <% }}); %>
     </div>
     <div class="modal-footer">
         <button class="btn btn-default" ng-click="dismiss()" type="button">Cancel</button>

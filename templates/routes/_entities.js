@@ -10,8 +10,7 @@ exports.findAll = function(req, res) {
     group = req.query.group || "",
     offset = ((page - 1) * limit),
     query = {
-      sort: sort,
-      order: order,
+      order: sort + ' ' + order,
       offset: offset,
       limit: limit
     };

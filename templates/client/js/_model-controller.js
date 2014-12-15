@@ -62,7 +62,7 @@ angular.module('<%= baseName %>')
         });
       };
 
-      $scope.limit = function(limit){
+      $scope.shows = function(limit){
         $scope.limit = limit;
         $scope.items = resource<%= _.classify(name) %>.query({
           limit: limit,
