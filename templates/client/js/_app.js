@@ -15,6 +15,7 @@ angular.module('<%= baseName %>', [
 	.constant("API_KEY", "1234567890")
 	.constant("SESSION_COOKIE_NAME", "session")
 	.constant("DELAY", 5000)
+	.constant("PERPAGE", [10,20,50,100])
 	.constant("DEFAULT_ROUTE", "/")
 	.constant("REQUIRE_AUTH", "/signin")
 	.constant("VERSION", "© 2014 fb.com/leduongcom")
