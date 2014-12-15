@@ -1519,3 +1519,84 @@ img {
         height: 80px;        
     }
 }
+
+// background
+// -----------------
+// overrides Bootstrap
+.bg-style (@background, @color) {
+    background-color: @background;
+    color: @color;
+}
+
+.bg-variant-alt (@color) {
+    background-color: @color;
+    color: @reverse;
+    &:hover {
+        background-color: @color;
+        color: @reverse;
+    }
+}
+a.bg-primary { .bg-variant-alt (@brand-primary); }
+a.bg-success { .bg-variant-alt (@brand-success); }
+a.bg-info { .bg-variant-alt (@brand-info); }
+a.bg-warning { .bg-variant-alt (@brand-warning); }
+a.bg-danger { .bg-variant-alt (@brand-danger); }
+a.bg-orange { .bg-variant-alt (@color-orange); }
+
+// normal
+.bg-primary { .bg-style(@brand-primary, @reverse) };
+.bg-primary-light { .bg-style(@skin-light, @reverse) };
+.bg-success { .bg-style(@brand-success, @reverse) };
+.bg-info { .bg-style(@brand-info, @reverse) };
+.bg-warning { .bg-style(@brand-warning, @reverse) };
+
+.bg-danger { .bg-style(@brand-danger, @reverse) };
+.bg-orange { .bg-style(@color-orange, @reverse) };
+.bg-violet { .bg-style(@color-violet, @reverse) };
+.bg-dark { .bg-style(@dark, @reverse) };
+.bg-bright { .bg-style(@bright, @text-color) };
+.bg-reverse { .bg-style(@reverse, @text-color) };
+
+.bg-facebook { .bg-style(#335397, @reverse) };
+.bg-twitter { .bg-style(#00c7f7, @reverse) };
+.bg-google-plus { .bg-style(#df4a32, @reverse) };
+
+
+// https://github.com/manifestinteractive/jqvmap
+.ui-map {
+    display: block;
+    height: 400px;
+}
+.jqvmap-label {
+    position: absolute;
+    display: none;
+    border-radius: @border-radius-small;
+    background: @dark;
+    color: #fff;
+    font-size: smaller;
+    padding: 3px;
+}
+.jqvmap-zoomin, .jqvmap-zoomout {
+    position: absolute;
+    left: 10px;
+    border-radius: @border-radius-small;
+    background: @dark;
+    padding: 3px;
+    color: #fff;
+    cursor: pointer;
+    line-height: 10px;
+    text-align: center;
+}
+.jqvmap-zoomin {
+    top: 10px;
+}
+.jqvmap-zoomout {
+    top: 30px;
+}
+.jqvmap-region {
+  cursor: pointer;
+}
+.jqvmap-ajax_response {
+  width: 100%;
+  height: 500px;
+}
