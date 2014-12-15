@@ -5,7 +5,7 @@
         </li>
         <% _.each(entities, function (entity) { %>
         <li>
-            <a href="/#/<%= pluralize(entity.name) %>"><i class="fa fa-folder"></i> <span> <%= _.humanize(pluralize(entity.name)) %></span></a>
+            <a href="#/<%= pluralize(entity.name) %>"><i class="fa fa-chevron-right"></i> <span> <%= _.humanize(pluralize(entity.name)) %></span></a>
         </li>
         <% }); %>
     </ul>

@@ -267,6 +267,7 @@ module.exports = (grunt) ->
 						# "styles/img/**/*"
 						# "styles/ui/images/**/*"
 						"views/**/*"
+						"img/**/*"
 					]
 				,
 					expand: true

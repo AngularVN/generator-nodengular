@@ -1,4 +1,4 @@
-<div class="page page-general">
+<div class="page page-<%= pluralize(name) %>">
     <section class="panel panel-default">
         <div class="panel-heading">
             <strong><span class="fa fa-th"></span> <%= _.capitalize(pluralize(name)) %></strong>
@@ -54,6 +54,22 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                        <p class="m-t inline">
+                            {{ items.from }}-{{ items.to }} of {{ items.total }} items
+                            <select ng-change="limit(items.limit)" ng-model="items.limit" ng-options="obj for obj in perpage">
+                            </select>
+                            per page
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination boundary-links="true" class="pagination-sm" items-per-page="items.limit" ng-change="page(items.page)" ng-model="items.page" rotate="false" total-items="items.total">
+                        </pagination>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
