@@ -2,7 +2,7 @@
     <div class="modal-header">
         <button class="close" ng-click="dismiss()" type="button">×</button>
         <h4 class="modal-title" id="my<%= _.capitalize(name) %>Label">
-        {{ <%= name %>.id ? "Edit" : "Create"}} a <%= _.capitalize(name) %>
+        {{ <%= name %>.id ? "Edit" : "Create"}} a <%= _.humanize(name) %>
         </h4>
     </div>
     <div class="modal-body">
