@@ -6,7 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "4.1.1",
+    "express": "~4.1.1",
     "body-parser": "~1.0.0",
     "errorhandler": "~1.0.0",
     "method-override": "~1.0.0",
@@ -15,7 +15,8 @@
     "mysql": "*",
     "sequelize": "~2.0",
     "sequelize-mysql": "*",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "MD5": "~1.*"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

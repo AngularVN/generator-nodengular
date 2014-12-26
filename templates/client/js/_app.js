@@ -1,80 +1,93 @@
 'use strict';
 // Declare app level module which depends on filters, and services
 angular.module('<%= baseName %>', [
-	'ngResource',
-	'ngRoute',
-	'ngCookies',
-	"<%= baseName %>.filters",
-	"<%= baseName %>.services",
-	"<%= baseName %>.directives",
-	"<%= baseName %>.controllers",
-	'ui.bootstrap',
-	'ui.date'
-])
+		'ngResource',
+		'ngRoute',
+		'ngCookies',
+		"api.filters",
+		"api.services",
+		"api.directives",
+		"api.controllers",
+		'ui.bootstrap',
+	])
 	.constant("DOMAIN", "")
 	.constant("API_KEY", "1234567890")
 	.constant("SESSION_COOKIE_NAME", "session")
 	.constant("DELAY", 5000)
-	.constant("PERPAGE", [10,20,50,100])
+	.constant("PERPAGE", [10, 20, 50, 100])
+	.constant('ROLES', ['administrator', 'moderator', 'accounting', 'cashier', 'user'])
 	.constant("DEFAULT_ROUTE", "/")
 	.constant("REQUIRE_AUTH", "/signin")
 	.constant("VERSION", "© 2014 fb.com/leduongcom")
 
-/**
- * [description]
- */
+
+
 .config([
-	"$httpProvider",
-	function($httpProvider) {
+	'$provide', '$httpProvider',
+	function($provide, $httpProvider) {
 		$httpProvider.defaults.headers.common = {
 			"Accept": "application/json, text/plain, */*",
 			"Content-Type": "application/json;charset=utf-8",
 			"X-Requested-With": "XMLHttpRequest"
 		};
-		// return $httpProvider.responseInterceptors.push(function($q, $location, $rootScope, DEFAULT_ROUTE) {
-		// 	return function(promise) {
-		// 		return promise.then((function(response) {
-		// 			var currentPath, payloadData, ref;
-		// 			if (response.headers()["content-type"] === "application/json; charset=utf-8" || response.headers()["content-type"] === "application/json" || response.headers()["content-type"] === "text/html") {
-		// 				if (response.data.code === 200 || response.data.code === 302) {
-		// 					payloadData = response.data.payload;
-		// 					response.data = payloadData;
-		// 					return response;
-		// 				} else {
-		// 					if (response.data.code === 400) {
-		// 						$rootScope.$broadcast("error", response.data.message || "Error. Bad Request.");
-		// 					} else if (response.data.code === 401) {
-		// 						$rootScope.$broadcast('error', response.data.message || 'Error. Unauthorized');
-		// 						currentPath = $location.path();
-		// 						if (currentPath !== "/signout" && $location.path() !== "/signin" && $location.path() !== "/signup") {
-		// 							ref = $location.$$url;
-		// 							$location.path("/signout").search({
-		// 								ref: ref
-		// 							});
-		// 						}
-		// 					} else if (response.data.code === 403) {
-		// 						if ($location.path() !== DEFAULT_ROUTE) {
-		// 							$rootScope.$broadcast("error", response.data.message || "Error. Forbidden.");
-		// 							$location.path(DEFAULT_ROUTE);
-		// 						}
-		// 					} else if (response.data.code === 404) {
-		// 						if ($location.path() !== DEFAULT_ROUTE) {
-		// 							$rootScope.$broadcast("error", response.data.message || "Error. Not Found.");
-		// 							$location.path(DEFAULT_ROUTE);
-		// 						}
-		// 					} else {
-		// 						$rootScope.$broadcast("error", response.data.message || "Error. Server is having a problem");
-		// 					}
-		// 					return $q.reject(response);
-		// 				}
-		// 			}
-		// 			return response;
-		// 		}), function(response) {
-		// 			$rootScope.$broadcast("error", "Error. Your connection is having a problem");
-		// 			return $q.reject(response);
-		// 		});
-		// 	};
-		// });
+		$provide.factory('ddInterceptor', [
+			'$q', '$rootScope', '$injector', '$location', 'REQUIRE_AUTH',
+			function($q, $rootScope, $injector, $location, REQUIRE_AUTH) {
+				var currentPath, payloadData, ref;
+				var exports = {
+					response: function(response) {
+						// do something on success
+						if (response.headers()["content-type"] === "application/json") {
+							if (response.data.code === 400) {
+								$rootScope.$broadcast("error", response.data.message || "Error. 400 Bad Request.");
+							} else if (response.data.code === 401) {
+								$rootScope.$broadcast('error', response.data.message || 'Error. 401 Unauthorized.');
+								$location.path(REQUIRE_AUTH);
+								currentPath = $location.path();
+								if (currentPath !== REQUIRE_AUTH || currentPath !== "/signout" || currentPath !== "/signup") {
+									ref = $location.$$url;
+									$location.path("/signout").search({
+										ref: ref
+									});
+								}
+							} else if (response.data.code === 403) {
+								if ($location.path() !== REQUIRE_AUTH) {
+									$rootScope.$broadcast("error", response.data.message || "Error. 403 Forbidden.");
+									$location.path(REQUIRE_AUTH);
+								}
+							} else if (response.data.code === 404) {
+								if ($location.path() !== REQUIRE_AUTH) {
+									$rootScope.$broadcast("error", response.data.message || "Error. 404 Not Found.");
+									$location.path(REQUIRE_AUTH);
+								}
+							}
+							// return response;//return $q.reject(response);
+						};
+						return response;
+					},
+					responseError: function(response) {
+						var currentPath, message = response.headers()['x-status-reason'] || 'Error. Your connection is having a problem';
+						$rootScope.$broadcast('error', message);
+						if (response.status === 401) {
+							currentPath = $location.path();
+							if (currentPath !== "/signout" && currentPath !== "/signin" && currentPath !== "/signup") {
+								ref = $location.$$url;
+								$location.path("/signout").search({
+									ref: ref
+								});
+							}
+						}
+						return $q.reject(response);
+						if (canRecover(response)) {
+							return responseOrNewPromise
+						}
+						return $q.reject(response);
+					}
+				};
+				return exports;
+			}
+		]);
+		$httpProvider.interceptors.push('ddInterceptor');
 	}
 ])
 
@@ -127,9 +140,12 @@ angular.module('<%= baseName %>', [
 .config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
-			.when('/', {
+			.when('/home', {
 				templateUrl: 'views/home/home.html',
 				controller: 'HomeCtrl'
+			})
+			.when('/dashboard', {
+				templateUrl: 'views/dashboard.html',
 			})
 			.when('/signin', {
 				templateUrl: 'views/signin.html',
@@ -143,7 +159,7 @@ angular.module('<%= baseName %>', [
 				}
 			})
 			.otherwise({
-				redirectTo: '/'
+				redirectTo: '/dashboard'
 			});
 	}
 ]);

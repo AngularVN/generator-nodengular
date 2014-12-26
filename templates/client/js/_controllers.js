@@ -2,6 +2,7 @@
  * common Controller
  */
 angular.module("<%= baseName %>.controllers", [])
+
 	/**
 	 * [description]
 	 * AppCtrl
@@ -14,7 +15,7 @@ angular.module("<%= baseName %>.controllers", [])
 				path = $location.path();
 				return _.contains(['/404', '/500', '/lock', '/signin', '/signup', '/forgot'], path);
 			};
-			return $scope.main = {
+			$scope.main = {
 				brand: 'Inventory Management',
 				name: 'Admin'
 			};
@@ -48,15 +49,17 @@ angular.module("<%= baseName %>.controllers", [])
  * HeaderCtrl
  */
 .controller("HeaderCtrl", [
-	"$scope", "$rootScope", "$location", "$interval", "securityService",
-	function($scope, $rootScope, $location, $interval, securityService) {
+	"$scope", "$rootScope", "$location", "$interval", "securityService", "toastr",
+	function($scope, $rootScope, $location, $interval, securityService, toastr) {
 		$scope.isAuthenticated = securityService.isAuthenticated();
+
 		$scope.isActive = function(routePattern) {
 			if ((new RegExp("^" + routePattern + ".*")).test($location.path())) {
 				return true;
 			}
 			return false;
 		};
+
 		$scope.isAdmin = function() {
 			if ($scope.isAuthenticated) {
 				if ($scope.user.group.name === "admin") {
@@ -65,6 +68,7 @@ angular.module("<%= baseName %>.controllers", [])
 			}
 			return false;
 		};
+
 		$scope.$on("authChange", function(event) {
 			$scope.isAuthenticated = securityService.isAuthenticated();
 			if ($scope.isAuthenticated) {
@@ -73,66 +77,19 @@ angular.module("<%= baseName %>.controllers", [])
 				$scope.user = null;
 			}
 		});
-	}
-])
 
-/**
- * [description]
- * Message Flash
- */
-.controller("FlashCtrl", [
-	"$scope", "$location", "$rootScope", "DELAY", "uniqueIdService", "$sce",
-	function($scope, $location, $rootScope, DELAY, uniqueIdService, $sce) {
-		$scope.messages = {};
 		$scope.$on("success", function(event, msg) {
-			var id;
-			id = uniqueIdService.generate();
-			$scope.messages[id] = {
-				"class": "alert-success",
-				msg: $sce.trustAsHtml(msg)
-			};
-			setTimeout((function() {
-				$scope.close(id);
-			}), DELAY);
+			toastr.logSuccess(msg);
 		});
-		$scope.$on("notify", function(event, msg) {
-			var id;
-			id = uniqueIdService.generate();
-			$scope.messages[id] = {
-				"class": "alert-info",
-				msg: $sce.trustAsHtml(msg)
-			};
-			setTimeout((function() {
-				$scope.close(id);
-			}), DELAY);
+		$scope.$on("info", function(event, msg) {
+			toastr.log(msg);
 		});
 		$scope.$on("warning", function(event, msg) {
-			var id;
-			id = uniqueIdService.generate();
-			$scope.messages[id] = {
-				"class": "alert-warning",
-				msg: $sce.trustAsHtml(msg)
-			};
-			setTimeout((function() {
-				$scope.close(id);
-			}), DELAY);
+			toastr.logWarning(msg);
 		});
 		$scope.$on("error", function(event, msg) {
-			var id;
-			id = uniqueIdService.generate();
-			$scope.messages[id] = {
-				"class": "alert-danger",
-				msg: $sce.trustAsHtml(msg)
-			};
-			setTimeout((function() {
-				$scope.close(id);
-			}), DELAY);
+			toastr.logError(msg);
 		});
-		$scope.close = function(id) {
-			if ($scope.messages.hasOwnProperty(id)) {
-				delete $scope.messages[id];
-			}
-		};
 	}
 ])
 

@@ -77,32 +77,32 @@ angular.module("<%= baseName %>.services", [])
 				register: true
 			},
 			find: function(params) {
-				return $http.get(DOMAIN + "/<%= baseName %>/users", {
+				return $http.get(DOMAIN + "/api/users", {
 					params: params
 				});
 			},
 			login: function(params) {
-				return $http.post(DOMAIN + "/<%= baseName %>/auth/login", params);
+				return $http.post(DOMAIN + "/api/auth/login", params);
 			},
 			create: function(params) {
-				return $http.post(DOMAIN + "/<%= baseName %>/users", params);
+				return $http.post(DOMAIN + "/api/users", params);
 			},
 			getMe: function() {
-				return $http.get(DOMAIN + "/<%= baseName %>/users/me");
+				return $http.get(DOMAIN + "/api/users/me");
 			},
 			get: function(id, params) {
-				return $http.get(DOMAIN + "/<%= baseName %>/users/" + id, {
+				return $http.get(DOMAIN + "/api/users/" + id, {
 					params: params
 				});
 			},
 			updateMe: function(params) {
-				return $http.put(DOMAIN + "/<%= baseName %>/users/me", params);
+				return $http.put(DOMAIN + "/api/users/me", params);
 			},
 			update: function(id, params) {
-				return $http.put(DOMAIN + "/<%= baseName %>/users/" + id, params);
+				return $http.put(DOMAIN + "/api/users/" + id, params);
 			},
 			"delete": function(id) {
-				return $http["delete"](DOMAIN + "/<%= baseName %>/users/" + id);
+				return $http["delete"](DOMAIN + "/api/users/" + id);
 			}
 		};
 		return exports;
@@ -170,3 +170,32 @@ angular.module("<%= baseName %>.services", [])
 		return exports;
 	}
 ])
+
+.factory('toastr', [
+	'DELAY',
+	function(DELAY) {
+		var logIt;
+		toastr.options = {
+			"closeButton": true,
+			"positionClass": "toast-top-right",
+			"timeOut": DELAY
+		};
+		logIt = function(message, type) {
+			return toastr[type](message);
+		};
+		return {
+			log: function(message) {
+				logIt(message, 'info');
+			},
+			logWarning: function(message) {
+				logIt(message, 'warning');
+			},
+			logSuccess: function(message) {
+				logIt(message, 'success');
+			},
+			logError: function(message) {
+				logIt(message, 'error');
+			}
+		};
+	}
+]);

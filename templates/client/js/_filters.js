@@ -1,41 +1,48 @@
 /**
  * common Filter
  */
-angular.module("<%= baseName %>.filters", [])
+angular.module("<%= baseName %>.filters", []).
+
+filter("capitalize", function() {
+	return function(str) {
+		str = (str == null ? "" : String(str));
+		return str.charAt(0).toUpperCase() + str.slice(1);
+	};
+}).
 
 /**
  * [description]
  * @param  {[type]} $sce)
  * @return {[type]} [description]
  */
-.filter("unsafe", [
+filter("unsafe", [
 	"$sce",
 	function($sce) {
 		return function(val) {
 			return $sce.trustAsHtml(val);
 		};
 	}
-])
+]).
 
 /**
  * [example]
  * <img ng-src="url | getAvatar" alt=""/>
  * @return {[url]} [return url avatar]
  */
-.filter("getAvatar", function() {
+filter("avatar", function() {
 	return function(a) {
 		if (!a) {
 			a = "img/avatar.jpg";
 		}
 		return a;
 	};
-})
+}).
 
 /**
  * [age for birthday]
  * @return {[int]} age
  */
-.filter("age", function() {
+filter("age", function() {
 	return function(arg) {
 		var today;
 		if (parseInt(arg)) {
@@ -44,26 +51,26 @@ angular.module("<%= baseName %>.filters", [])
 		}
 		return arg;
 	};
-})
+}).
 
 /**
  * [description]
  * @return {[type]} [description]
  */
-.filter("fixbr", function() {
+filter("fixbr", function() {
 	return function(arg) {
 		if (arg) {
 			return arg.replace(/&lt;br(.*?)\/&gt;/g, "<br />");
 		}
 	};
-})
+}).
 
 /**
  * [description]
  * chunk characters
  * @return {[type]} [description]
  */
-.filter("characters", function() {
+filter("characters", function() {
 	return function(input, chars, breakOnWord) {
 		var lastspace;
 		if (isNaN(chars)) {
@@ -88,14 +95,14 @@ angular.module("<%= baseName %>.filters", [])
 		}
 		return input;
 	};
-})
+}).
 
 /**
  * [description]
  * chunk words
  * @return {[type]} [description]
  */
-.filter("words", function() {
+filter("words", function() {
 	return function(input, words) {
 		var inputWords;
 		if (isNaN(words)) {
@@ -112,14 +119,26 @@ angular.module("<%= baseName %>.filters", [])
 		}
 		return input;
 	};
-})
+}).
+
+
+filter("mydatetime", function($filter) {
+	return function(str) {
+		var tempdate;
+		if (str == null) {
+			return "";
+		}
+		tempdate = new Date(String(str).replace(/-/g, "/"));
+		return $filter("date")(tempdate, "dd/MM/yyyy HH:mm:ss");
+	};
+}).
 
 /**
  * [description]
  * Time ago
  * @return {[type]} [description]
  */
-.filter("timeago", function() {
+filter("timeago", function() {
 	return function(time, local, raw) {
 		var DAY, DECADE, HOUR, MINUTE, MONTH, WEEK, YEAR, offset, span;
 		if (!time) {

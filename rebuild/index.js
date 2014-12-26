@@ -97,7 +97,6 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
   this.template(tpl + 'client/htaccess', 'source/.htaccess');
   this.template(tpl + 'client/_index.html', 'source/index.html');
   this.template(tpl + 'client/views/_nav.html', 'source/views/nav.html');
-  this.template(tpl + 'client/views/_flash.html', 'source/views/flash.html');
   this.template(tpl + 'client/views/_header.html', 'source/views/header.html');
   this.template(tpl + 'client/views/_signin.html', 'source/views/signin.html');
   this.template(tpl + 'client/views/home/_home.html', 'source/views/home/home.html');

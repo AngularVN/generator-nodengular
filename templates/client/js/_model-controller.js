@@ -1,9 +1,12 @@
 angular.module('<%= baseName %>')
-  .controller('<%= _.classify(name) %>Ctrl', ['$scope', '$modal', 'PERPAGE', 'resolved<%= _.classify(name) %>', 'resource<%= _.classify(name) %>',
-    function($scope, $modal, PERPAGE, resolved<%= _.classify(name) %>, resource<%= _.classify(name) %> ){
+  .controller('<%= _.classify(name) %>Ctrl', ['$scope', '$modal', '$location', 'PERPAGE', 'resolved<%= _.classify(name) %>', 'resource<%= _.classify(name) %>',
+    function($scope, $modal, $location, PERPAGE, resolved<%= _.classify(name) %>, resource<%= _.classify(name) %> ){
       $scope.perpage = PERPAGE;
-      $scope.limit = 0;
-      $scope.q = $scope.sort = $scope.order = '';
+      $scope.q = $location.search().q || '';
+      $scope.sort = $location.search().sort || '';
+      $scope.order = $location.search().order || '';
+      $scope.limit = $location.search().limit || 20;
+
       $scope.items = resolved<%= _.classify(name) %>;
 
       $scope.create = function(){
@@ -29,40 +32,47 @@ angular.module('<%= baseName %>')
         }        
       };
 
-      $scope.save = function(id){
-        if (id){ resource<%= _.classify(name) %>.update({
-            id: id
-          }, $scope.<%= name %> ,
-          function(){
-            $scope.items = resource<%= _.classify(name) %>.query();
-            $scope.clear();
-          });
-        } else { resource<%= _.classify(name) %>.save($scope.<%= name %> ,
-          function(){
-            $scope.items = resource<%= _.classify(name) %>.query();
-            $scope.clear();
-          });
-        }
-      };
-
       $scope.clear = function(){
-        $scope.<%= name %> = {<% _.each(attrs, function(attr){ %> '<%= _.underscored(attr.attrName) %>': '',<%}); %> id: ''};
+        $scope.<%= name %> = resource<%= _.classify(name) %>.default;
       };
 
       $scope.open = function(id){
         var modal = $modal.open({
           templateUrl: 'views/<%= name %>/<%= name %>-modal.html',
-          controller: <%= _.classify(name) %>SaveCtrl,
+          controller: ['$scope', '$modalInstance', '<%= name %>', 'resource<%= _.classify(name) %>', 
+            function($scope, $modalInstance, <%= name %>, resource<%= _.classify(name) %>){
+              $scope.<%= name %> = <%= name %>;
+              $scope.submit = function() {
+                if (<%= name %>.id) {
+                  resource<%= _.classify(name) %>.update({
+                      id: <%= name %>.id
+                    }, $scope.<%= name %>,
+                    function() {
+                      $modalInstance.close($scope.<%= name %>);
+                    });
+                } else {
+                  resource<%= _.classify(name) %>.save($scope.<%= name %>,
+                    function() {
+                      $modalInstance.close($scope.<%= name %>);
+                    });
+                }
+              };
+              $scope.dismiss = function(){
+                $modalInstance.dismiss('dismiss');
+              };
+            }],
           resolve: { <%= name %> : function(){ return $scope.<%= name %>;}}
         });
 
-        modal.result.then(function(entity){
-          $scope.<%= name %> = entity;
-          $scope.save(id);
+        modal.result.then(function(entity) {
+          if (entity) {
+            $scope.items = resource<%= _.classify(name) %>.query();
+            $scope.clear();
+          }
         });
       };
 
-      $scope.shows = function(limit){
+      $scope.show = function(limit){
         $scope.limit = limit;
         $scope.items = resource<%= _.classify(name) %>.query({
           limit: limit,
@@ -87,13 +97,3 @@ angular.module('<%= baseName %>')
       };
     }
   ]);
-
-var <%= _.classify(name) %>SaveCtrl = function($scope, $modalInstance, <%= name %>){
-  $scope.<%= name %> = <%= name %>;
-  $scope.submit = function(){
-    $modalInstance.close($scope.<%= name %>);
-  };
-  $scope.dismiss = function(){
-    $modalInstance.dismiss('dismiss');
-  };
-};

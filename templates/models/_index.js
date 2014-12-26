@@ -3,15 +3,31 @@ var fs = require('fs'),
   Sequelize = require('sequelize'),
   lodash = require('lodash'),
   db = {},
-  sequelize = new Sequelize('example', 'example', null, {
-    dialect: "sqlite", // or 'sqlite', 'postgres', 'mariadb'
-    storage: "/tmp/example.db",
+  sequelize = null;
+
+if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
+  // the application is executed on Heroku ... use the postgres database
+  var match = process.env.HEROKU_POSTGRESQL_BRONZE_URL.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/)
+
+  sequelize = new Sequelize(match[5], match[1], match[2], {
+    dialect: 'postgres',
+    protocol: 'postgres',
+    port: match[4],
+    host: match[3],
+    logging: true //false
   })
-  //sequelize = new Sequelize('example_sams', 'example', 'example', {
-  //   dialect: 'mysql',
-  //   host: "localhost",
-  //   port: 3306
-  // }),
+} else {
+  // the application is executed on the local machine ... use mysql
+  // sequelize = new Sequelize('example', 'example', null, {
+  //     dialect: "sqlite", // or 'sqlite', 'postgres', 'mariadb'
+  //     storage: "/tmp/example.db",
+  //   })
+  sequelize = new Sequelize('example_sams', 'example', 'example', {
+    dialect: 'mysql',
+    host: "localhost",
+    port: 3306
+  })
+}
 
 fs.readdirSync(__dirname)
   .filter(function(file) {

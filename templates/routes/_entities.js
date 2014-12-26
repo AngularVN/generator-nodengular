@@ -22,8 +22,12 @@ exports.findAll = function(req, res) {
   };
 
   if (q) {
-    query = _.merge({
-      // where: ["name LIKE '%" + q + "%'"] // uncomment for use
+    query = _.extend({<% var concat = []; _.each(attrs, function (attr) {
+      if (attr.attrType === "String" || attr.attrType === "Char" || attr.attrType === "Text") {
+        concat.push(_.underscored(attr.attrName));
+      }
+    });%>
+    where: ["CONCAT(<%= concat.join(', ') %>) LIKE '%" + q + "%'"]
     }, query);
   };
 

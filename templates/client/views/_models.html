@@ -7,7 +7,7 @@
             <div class="row text-small">
                 <div class="col-sm-4">
                     <div class="input-group text-right">
-                        <button class="btn btn-success" ng-click="create()" type="button"><i class="fa fa-plus"></i> New <%= _.capitalize(name) %></button>
+                        <button class="btn btn-primary" ng-click="create()" type="button"><i class="fa fa-plus"></i> New <%= _.capitalize(name) %></button>
                     </div>
                 </div>
                 <div class="col-sm-offset-4 col-sm-4">
@@ -44,11 +44,11 @@
                             </td>
                             <% _.each(attrs, function (attr) { if (attr.attrName != "deleted") { %>
                             <td>
-                                {{<%= name %>.<%= _.underscored(attr.attrName) %><% if (attr.attrType === 'Date') { %> | date:'yyyy-MM-dd'<% } %>}}
+                                {{<%= name %>.<%= _.underscored(attr.attrName) %><% if (attr.attrType === 'Date') { %> | date:'MM-dd-yyyy'<% } %>}}
                             </td>
                             <% }}); %>
                             <td>
-                                <button class="btn" ng-click="update(<%= name %>.id)" type="submit"><span class="fa fa-pencil"></span></button>
+                                <button class="btn btn-info" ng-click="update(<%= name %>.id)" type="submit"><span class="fa fa-pencil"></span></button>
                                 <button class="btn btn-danger" ng-click="delete(<%= name %>.id)" type="submit"><span class="fa fa-trash"></span></button>
                             </td>
                         </tr>
@@ -60,7 +60,7 @@
                     <div class="col-md-6 page-num-info">
                         <p class="m-t inline">
                             {{ items.from }}-{{ items.to }} of {{ items.total }} items
-                            <select ng-change="shows(items.limit)" ng-model="items.limit" ng-options="obj for obj in perpage">
+                            <select ng-change="show(items.limit)" ng-model="items.limit" ng-options="obj for obj in perpage">
                             </select>
                             per page
                         </p>

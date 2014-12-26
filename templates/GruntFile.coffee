@@ -191,13 +191,32 @@ module.exports = (grunt) ->
 					ext: ".js"
 				]
 
+		autoprefixer:
+			options:
+				browsers: ['last 1 version']
+			dist:
+				files: [
+					expand: true,
+					cwd: '.tmp/css/'
+					src: '{,*/}*.css'
+					dest: '.tmp/css/'
+				]
+		
+		rev:
+			dist:
+				files:
+					src: [
+						'<%%= yeoman.dist %>/js/{,*/}*.js'
+						'<%%= yeoman.dist %>/css/{,*/}*.css'
+					]
+
 		useminPrepare:
 			html: "<%%= yeoman.app %>/index.html"
 			options:
 				dest: "<%%= yeoman.dist %>"
 				flow:
 					steps:
-						js: ["concat"]
+						js: ["concat", "uglifyjs"]
 						css: ["concat"]
 					post: []
 
@@ -358,9 +377,12 @@ module.exports = (grunt) ->
 		"useminPrepare"
 		"concurrent:lessDist"
 		"copy:dist"
+		"autoprefixer"
 		"concat"
 		"uglify"
 		"cssmin"
-		"usemin"]
+		"rev"
+		"usemin"
+	]
 	grunt.registerTask "build", ["buildLess"]
 	grunt.registerTask "default", ["lessServer"]

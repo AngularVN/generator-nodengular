@@ -60,11 +60,14 @@
                 <% } 
 
                 else if (attr.attrType === "Boolean") { %>
-                <input type="checkbox" name="<%= _.underscored(attr.attrName) %>" ng-model="<%= name %>.<%= _.underscored(attr.attrName) %>"<% if (attr.required) { %> required<% } %> />
+                <label class="switch switch-success"><input name="<%= _.underscored(attr.attrName) %>" ng-checked="<%= name %>.<%= _.underscored(attr.attrName) %> == 1" ng-model="<%= name %>.<%= _.underscored(attr.attrName) %>" type="checkbox"<% if (attr.required) { %> required<% } %>><i></i></input></label>
                 <% } 
 
-                else if (attr.attrType === "DateTime") { %>
-                <input type="text" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.underscored(attr.attrName) %>" ui-date="<%= _.underscored(attr.attrName) %>DateOptions" ui-date-format="yy-mm-dd" ng-model="<%= name %>.<%= _.underscored(attr.attrName) %>"<% if (attr.required) { %> required<% } %> />
+                else if (attr.attrType === "DateTime" || attr.attrType === "Date") { %>
+                <div class="input-group">
+                    <input class="form-control" close-text="Close" datepicker-options="dateOptions" datepicker-popup="MM/dd/yyyy" is-open="opened" ng-model="<%= name %>.<%= _.underscored(attr.attrName) %>" placeholder="<%= _.humanize(attr.attrName) %>" type="text"<% if (attr.required) { %> required<% } %> />
+                    <span class="input-group-addon" ng-click="open($event)"><i class="fa fa-calendar"></i></span>
+                </div>
                 <% } 
 
                 else if (attr.attrType === "Enum") { _.each(attr.enumValues, function (value) { %>
