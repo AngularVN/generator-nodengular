@@ -1,13 +1,13 @@
 <div class="page page-<%= pluralize(name) %>">
     <section class="panel panel-default">
         <div class="panel-heading">
-            <strong><span class="fa fa-th"></span> <%= _.capitalize(pluralize(name)) %></strong>
+            <strong><span class="fa fa-th"></span> <%= _.humanize(pluralize(name)) %></strong>
         </div>
         <div class="panel-body">
             <div class="row text-small">
                 <div class="col-sm-4">
                     <div class="input-group text-right">
-                        <button class="btn btn-primary" ng-click="create()" type="button"><i class="fa fa-plus"></i> New <%= _.capitalize(name) %></button>
+                        <button class="btn btn-primary" ng-click="create()" type="button"><i class="fa fa-plus"></i> New <%= _.humanize(name) %></button>
                     </div>
                 </div>
                 <div class="col-sm-offset-4 col-sm-4">
