@@ -225,15 +225,15 @@ module.exports = (grunt) ->
 			dist:
 				files: [
 					expand: false
-					cwd: '<%%= yeoman.dist %>/css/'
-					src: ['*.css', '!*.min.css']
-					dest: '<%%= yeoman.dist %>/css/'
+					cwd: '<%%= yeoman.dist %>'
+					src: ['**/*.css', '!**/*.min.css']
+					dest: '<%%= yeoman.dist %>'
 					ext: '.css'
 				]
 
 		usemin:
-			html: ["<%%= yeoman.dist %>/**/*.html", "!<%%= yeoman.dist %>/bower_components/**"]
-			css: ["<%%= yeoman.dist %>/css/*.css"]
+			html: ["<%%= yeoman.dist %>/{,*/}*.html", "!<%%= yeoman.dist %>/bower_components/**"]
+			css: ["<%%= yeoman.dist %>/css/{,*/}*.css"]
 			options:
 				dirs: ["<%%= yeoman.dist %>"]
 
@@ -297,8 +297,8 @@ module.exports = (grunt) ->
 				,
 					expand: true
 					flatten: true
-					cwd: "<%= yeoman.app %>"
-					dest: "<%= yeoman.dist %>/js"
+					cwd: ""
+					dest: "/js"
 					src: ["bower_components/underscore/underscore-min.map"]
 				,
 					expand: true
@@ -333,9 +333,9 @@ module.exports = (grunt) ->
 				mangle: false
 				compress:
 					drop_console: true
-			dist:
-				files:
-					"<%%= yeoman.dist %>/js/app.js": [".tmp/**/*.js", "<%%= yeoman.app %>/scripts/**/*.js"]
+			# dist:
+			# 	files:
+			# 		"<%%= yeoman.dist %>/js/app.js": [".tmp/**/*.js", "<%%= yeoman.app %>/scripts/**/*.js"]
 
 
 	grunt.registerTask "sassServer", (target) ->
@@ -384,5 +384,6 @@ module.exports = (grunt) ->
 		"rev"
 		"usemin"
 	]
+
 	grunt.registerTask "build", ["buildLess"]
 	grunt.registerTask "default", ["lessServer"]
