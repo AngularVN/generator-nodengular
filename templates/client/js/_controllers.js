@@ -16,7 +16,7 @@ angular.module("<%= baseName %>.controllers", [])
 				return _.contains(['/404', '/500', '/lock', '/signin', '/signup', '/forgot'], path);
 			};
 			$scope.main = {
-				brand: 'Inventory Management',
+				brand: '<%= baseName %>',
 				name: 'Admin'
 			};
 		}

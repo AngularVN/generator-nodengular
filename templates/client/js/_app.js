@@ -141,11 +141,7 @@ angular.module('<%= baseName %>', [
 	function($routeProvider) {
 		$routeProvider
 			.when('/home', {
-				templateUrl: 'views/home/home.html',
-				controller: 'HomeCtrl'
-			})
-			.when('/dashboard', {
-				templateUrl: 'views/dashboard.html',
+				templateUrl: 'views/home/home.html'
 			})
 			.when('/signin', {
 				templateUrl: 'views/signin.html',

@@ -17,16 +17,18 @@ if (process.env.HEROKU_POSTGRESQL_BRONZE_URL) {
     logging: true //false
   })
 } else {
-  // the application is executed on the local machine ... use mysql
-  // sequelize = new Sequelize('example', 'example', null, {
-  //     dialect: "sqlite", // or 'sqlite', 'postgres', 'mariadb'
-  //     storage: "/tmp/example.db",
-  //   })
-  sequelize = new Sequelize('example_sams', 'example', 'example', {
-    dialect: 'mysql',
-    host: "localhost",
-    port: 3306
+  <% if (databaseType == 'sqlite'){%>
+  sequelize = new Sequelize('<%= databaseName %>', '<%= userName %>', null, {
+    dialect: "sqlite", // or 'sqlite', 'postgres', 'mariadb'
+    storage: path.join(__dirname, "/../<%= databaseName %>"),
   })
+  <% } else { %>
+  sequelize = new Sequelize('<%= databaseName %>', '<%= userName %>',  '<%= password %>', {
+    dialect: '<%= databaseType %>'
+    host: '<%= hostName %>'
+    port: '<%= port %>'
+  })
+  <% } %>
 }
 
 fs.readdirSync(__dirname)
