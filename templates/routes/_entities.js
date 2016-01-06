@@ -1,7 +1,24 @@
+/**
+ * @swagger
+ * resourcePath: /<%= baseName %>/<%= pluralize(name) %>
+ * description: All <%= _.capitalize(name) %> API
+ */
+
 var db = require('../models'),
   _ = require('lodash');
 
-exports.findAll = function(req, res) {
+
+/**
+ * @swagger
+ * path: /<%= baseName %>/<%= pluralize(name) %>
+ * operations:
+ *   -  httpMethod: GET
+ *      summary: Get list of <%= _.capitalize(name) %>
+ *      responseClass: <%= _.capitalize(name) %>
+ *      consumes:
+ *        - application/json
+ */
+ exports.findAll = function(req, res) {
   var q = req.query.q || "",
     sort = req.query.sort || "id",
     order = req.query.order || "asc",
@@ -44,6 +61,22 @@ exports.findAll = function(req, res) {
     })
 }
 
+/**
+ * @swagger
+ * path: /<%= baseName %>/<%= pluralize(name) %>/{id}
+ * operations:
+ *   -  httpMethod: GET
+ *      summary: Find a <%= _.capitalize(name) %> by ID
+ *      responseClass: <%= _.capitalize(name) %>
+ *      consumes:
+ *        - application/json
+ *      parameters:
+ *        - name: id
+ *          paramType: path
+ *          type: integer
+ *          required: true
+ *          description: ID of <%= _.capitalize(name) %>
+ */
 exports.find = function(req, res) {
   db.<%= _.capitalize(name) %>.find({
     where: {
@@ -58,6 +91,30 @@ exports.find = function(req, res) {
   })
 }
 
+
+/**
+ * @swagger
+ * path: /<%= baseName %>/<%= pluralize(name) %>
+ * operations:
+ *   -  httpMethod: POST
+ *      summary: Add a new <%= _.capitalize(name) %>
+ *      responseClass: <%= _.capitalize(name) %>
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      responseMessages:
+ *        201:
+ *          description: "Success"
+ *        405:
+ *          description: "Invalid input"
+ *      parameters:
+ *        - name: body
+ *          description: object of <%= _.capitalize(name) %>
+ *          paramType: body
+ *          required: true
+ *          type: <%= _.capitalize(name) %>
+ */
 exports.create = function(req, res) {
   db.<%= _.capitalize(name) %>.create(req.body).success(function(entity) {
     res.statusCode = 201
@@ -65,6 +122,37 @@ exports.create = function(req, res) {
   })
 }
 
+
+/**
+ * @swagger
+ * path: /<%= baseName %>/<%= pluralize(name) %>/{id}
+ * operations:
+ *   -  httpMethod: PUT
+ *      summary: Update an existing <%= _.capitalize(name) %> by ID
+ *      responseClass: <%= _.capitalize(name) %>
+ *      consumes:
+ *        - application/json
+ *      produces:
+ *        - application/json
+ *      responseMessages:
+ *        200:
+ *          description: "Success"
+ *        404:
+ *          description: "Not found"
+ *        405:
+ *          description: "Invalid input"
+ *      parameters:
+ *        - name: id
+ *          type: integer
+ *          required: true
+ *          paramType: path
+ *          description: ID of <%= _.capitalize(name) %>
+ *        - name: body
+ *          description: object of <%= _.capitalize(name) %>
+ *          paramType: body
+ *          required: true
+ *          type: <%= _.capitalize(name) %>
+ */
 exports.update = function(req, res) {
   db.<%= _.capitalize(name) %>.find({
     where: {
@@ -81,6 +169,27 @@ exports.update = function(req, res) {
   })
 }
 
+
+/**
+ * @swagger
+ * path: /<%= baseName %>/<%= pluralize(name) %>/{id}
+ * operations:
+ *   -  httpMethod: DELETE
+ *      summary: Delete <%= _.capitalize(name) %> by ID
+ *      consumes:
+ *        - application/json
+ *      responseMessages:
+ *        204:
+ *          description: "Success"
+ *        404:
+ *          description: "Not found"
+ *      parameters:
+ *        - name: id
+ *          type: integer
+ *          paramType: path
+ *          required: true
+ *          description: ID of <%= _.capitalize(name) %>
+ */
 exports.destroy = function(req, res) {
   db.<%= _.capitalize(name) %>.find({
     where: {
@@ -96,3 +205,13 @@ exports.destroy = function(req, res) {
     }
   })
 }
+
+/**
+ * @swagger
+ * models:
+ *   <%= _.capitalize(name) %>:
+ *     type: object
+ *     properties:
+ <% _.each(attrs, function (attr) { %>*       <%= attr.attrName %>:
+ *         type: <%= _.capitalize(attr.attrType) %>
+ <% }); %>*/
