@@ -140,7 +140,7 @@ angular.module('<%= baseName %>', [
 .config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider
-			.when('/home', {
+			.when('/dashboard', {
 				templateUrl: 'views/home/home.html'
 			})
 			.when('/signin', {

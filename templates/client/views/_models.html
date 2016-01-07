@@ -44,7 +44,7 @@
                             </td>
                             <% _.each(attrs, function (attr) { if (attr.attrName != "deleted") { %>
                             <td>
-                                {{<%= name %>.<%= _.underscored(attr.attrName) %><% if (attr.attrType === 'Date') { %> | date:'MM-dd-yyyy'<% } %>}}
+                                {{<%= name %>.<%= _.camelCase(attr.attrName) %><% if (attr.attrType === 'Date') { %> | date:'MM-dd-yyyy'<% } %>}}
                             </td>
                             <% }}); %>
                             <td>

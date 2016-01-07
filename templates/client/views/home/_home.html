@@ -1,12 +1,199 @@
-<div class="container-fluid">
+<div class="page page-dashboard" data-ng-controller="DashboardCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-boxed nav-justified">
+                <li>
+                    <a ng-href="#/campaign/campaigns"><i class="color-warning fa fa-gift"></i>Campaigns</a>
+                </li>
+                <li>
+                    <a ng-href="#/category/categories"><i class="color-info fa fa-ticket"></i>Categories</a>
+                </li>
+                <li>
+                    <a ng-href="#/stuff/stuffs"><i class="color-danger fa fa-shopping-cart"></i>Stuffs</a>
+                </li>
+                <li>
+                    <a ng-href="#/store/stores"><i class="color-success fa fa-building"></i>Stores</a>
+                </li>
+                <li>
+                    <a ng-href="#/employees"><i class="color-info-alt fa fa-users"></i>Users</a>
+                </li>
+                <li>
+                    <a ng-href="#/"><i class="color-primary fa fa-comments-o"></i>Messages</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong><span class="fa fa-th"></span><span> Statistics</span></strong>
+        </div>
+        <div class="panel-body" data-ng-controller="flotChartCtrl">
+            <div data-data="line1.data" data-flot-chart data-options="line1.options" style="width: 100%; height: 300px;">
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-8">
-            <h1>Welcome to <%= _.capitalize(baseName) %>!</h1>
-            <p class="lead">This is your homepage, ready for editing</p>
-
-            <p>
-             <span translate="main.like">If you like this Angular-Slim generator, please give us a star at </span>&nbsp;<a href="https://github.com/leduong/generator-nodengular" target="_blank" translate="main.github">Github</a>!
-            </p>
+            <section class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><span class="fa fa-th"></span><span> Map</span></strong>
+                </div>
+                <div class="panel-body" data-ng-controller="jqvmapCtrl">
+                    <div class="ui-map" options="worldMap" ui-jqvmap>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="fa fa-th"></span>
+                    <span> Realtime Chart</span>
+                </div>
+                <div class="panel-body" data-ng-controller="flotChartCtrl.realtime">
+                    <div data-flot-chart-realtime data-type="realtime" style="width: 100%; height: 400px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong><span class="fa fa-th"></span> Table</strong>
+        </div>
+        <div class="panel-body table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Project
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                        <th>
+                            Manager
+                        </th>
+                        <th>
+                            Progress
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            <span class="color-success"><i class="fa fa-level-up"></i></span> TWLT
+                        </td>
+                        <td>
+                            <span class="label label-info">Pending</span>
+                        </td>
+                        <td>
+                            Amery Lee
+                        </td>
+                        <td>
+                            <progressbar class="progressbar-xs no-margin" value="55">
+                            </progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            <span class="color-success"><i class="fa fa-level-up"></i></span> A16Z
+                        </td>
+                        <td>
+                            <span class="label label-primary">Due</span>
+                        </td>
+                        <td>
+                            Romayne Carlyn
+                        </td>
+                        <td>
+                            <progressbar class="progressbar-xs no-margin" type="success" value="34">
+                            </progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            <span class="color-warning"><i class="fa fa-level-down"></i></span> DARK
+                        </td>
+                        <td>
+                            <span class="label label-success">Due</span>
+                        </td>
+                        <td>
+                            Marybeth Joanna
+                        </td>
+                        <td>
+                            <progressbar class="progressbar-xs no-margin" type="info" value="68">
+                            </progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            <span class="color-info"><i class="fa fa-level-up"></i></span> Q300
+                        </td>
+                        <td>
+                            <span class="label label-danger">Blocked</span>
+                        </td>
+                        <td>
+                            Jonah Benny
+                        </td>
+                        <td>
+                            <progressbar class="progressbar-xs no-margin" type="warning" value="52">
+                            </progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            5
+                        </td>
+                        <td>
+                            <span class="color-danger"><i class="fa fa-level-down"></i></span> RVNG
+                        </td>
+                        <td>
+                            <span class="label label-warning">Suspended</span>
+                        </td>
+                        <td>
+                            Daly Royle
+                        </td>
+                        <td>
+                            <progressbar class="progressbar-xs no-margin" type="danger" value="77">
+                            </progressbar>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            6
+                        </td>
+                        <td>
+                            <span class="color-info"><i class="fa fa-level-down"></i></span> FDSA
+                        </td>
+                        <td>
+                            <span class="label label-info">Suspended</span>
+                        </td>
+                        <td>
+                            Jane Swift
+                        </td>
+                        <td>
+                            <progressbar class="progressbar-xs no-margin" type="success" value="55">
+                            </progressbar>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -39,11 +39,11 @@ if ('development' === app.get('env')) {
 }
 
 <% _.each(entities, function (entity) { %>
-app.get('/<%= baseName %>/<%= pluralize(entity.name) %>', <%= pluralize(entity.name) %>.findAll)
-app.get('/<%= baseName %>/<%= pluralize(entity.name) %>/:id', <%= pluralize(entity.name) %>.find)
-app.post('/<%= baseName %>/<%= pluralize(entity.name) %>', <%= pluralize(entity.name) %>.create)
-app.put('/<%= baseName %>/<%= pluralize(entity.name) %>/:id', <%= pluralize(entity.name) %>.update)
-app.del('/<%= baseName %>/<%= pluralize(entity.name) %>/:id', <%= pluralize(entity.name) %>.destroy)
+app.get('/<%= baseName %>/<%= entity.name %>', <%= pluralize(entity.name) %>.findAll)
+app.get('/<%= baseName %>/<%= entity.name %>/:id', <%= pluralize(entity.name) %>.find)
+app.post('/<%= baseName %>/<%= entity.name %>', <%= pluralize(entity.name) %>.create)
+app.put('/<%= baseName %>/<%= entity.name %>/:id', <%= pluralize(entity.name) %>.update)
+app.del('/<%= baseName %>/<%= entity.name %>/:id', <%= pluralize(entity.name) %>.destroy)
 <% }); %>
 
 db.sequelize.sync().complete(function(err) {

@@ -1,0 +1,81 @@
+<div class="page page-<%= pluralize(name) %>">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <b><i class="fa fa-building"></i> {{ channel.id ? "Edit" : "Create"}} a Channel</b>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="form" ng-submit="submit()" novalidate role="form">
+              <div class="form-group" ng-show="<%= name %>.id">
+                  <label class="col-sm-3 control-label" for="id">ID</label>
+                  <div class="col-sm-9">
+                      <input class="form-control" name="id" ng-model="<%= name %>.id" readonly type="text"/>
+                  </div>
+              </div>
+              <% _.each(attrs, function (attr) { if (attr.attrName != "deleted") { %>
+              <div class="form-group" ng-class="{'has-error': form.$dirty && form.<%= _.camelCase(attr.attrName) %>.$invalid}">
+                  <label for="<%= _.camelCase(attr.attrName) %>" class="col-sm-3 control-label"><%= _.humanize(attr.attrName) %></label>
+                  <div class="col-sm-9">
+                      <% if (attr.attrType === "String") { %>
+                      <input type="text" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.minLength) { %> ng-minlength="<%= attr.minLength %>" <% } if (attr.maxLength) { %> ng-maxlength="<%= attr.maxLength %>"<% } %><% if (attr.required) { %> required<% } %> />
+                      <% if (attr.minLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.minlength">Must be at least <%= attr.minLength %> characters.</span><% } %>
+                      <% if (attr.maxLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.maxlength">Must be at most <%= attr.maxLength %> characters.</span><% } %>
+                      <% }
+
+                      else if (attr.attrType === "Char") { %>
+                      <input type="text" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.minLength) { %> ng-minlength="<%= attr.minLength %>" <% } if (attr.maxLength) { %> ng-maxlength="<%= attr.maxLength %>"<% } %><% if (attr.required) { %> required<% } %> />
+                      <% if (attr.minLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.minlength">Must be at least <%= attr.minLength %> characters.</span><% } %>
+                      <% if (attr.maxLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.maxlength">Must be at most <%= attr.maxLength %> characters.</span><% } %>
+                      <% }
+
+                      else if (attr.attrType === "Text") { %>
+                      <textarea class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.minLength) { %> ng-minlength="<%= attr.minLength %>" <% } if (attr.maxLength) { %> ng-maxlength="<%= attr.maxLength %>"<% } %><% if (attr.required) { %> required<% } %> rows="5"></textarea>
+                      <% if (attr.minLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.minlength">Must be at least <%= attr.minLength %> characters.</span><% } %>
+                      <% if (attr.maxLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.maxlength">Must be at most <%= attr.maxLength %> characters.</span><% } %>
+                      <% }
+
+                      else if (attr.attrType === "Email") { %>
+                      <input type="email" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.required) { %> required<% } %> />
+                      <span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$invalid">Must be a valid email address.</span>
+                      <% }
+
+                      else if (attr.attrType === "Password") { %>
+                      <input type="password" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.minLength) { %> ng-minlength="<%= attr.minLength %>" <% } if (attr.maxLength) { %> ng-maxlength="<%= attr.maxLength %>"<% } %><% if (attr.required) { %> required<% } %> />
+                      <% if (attr.minLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.minlength">Must be at least <%= attr.minLength %> characters.</span><% } %>
+                      <% if (attr.maxLength > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.maxlength">Must be at most <%= attr.maxLength %> characters.</span><% } %>
+                      <span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error">Must be a valid password.</span>
+                      <% }
+
+                      else if (attr.attrType === "Integer") { %>
+                      <input type="number" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.min) { %> min="<%= attr.min %>" <% } if (attr.max) { %> max="<%= attr.max %>"<% } %><% if (attr.required) { %> required<% } %> />
+                      <% if (attr.min > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.min">Must be greater than or equal to <%= attr.min %>.</span><% } %>
+                      <% if (attr.max > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.max">Must be less than or equal to <%= attr.max %>.</span><% } %>
+                      <% }
+
+                      else if (attr.attrType === "Float") { %>
+                      <input type="number" step="any" class="form-control" placeholder="<%= _.humanize(attr.attrName) %>" name="<%= _.camelCase(attr.attrName) %>"
+                      ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.min) { %> min="<%= attr.min %>" <% } if (attr.max) { %> max="<%= attr.max %>"<% } %><% if (attr.required) { %> required<% } %> />
+                      <% if (attr.min > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.min">Must be greater than or equal to <%= attr.min %>.</span><% } %>
+                      <% if (attr.max > 0) { %><span class="error" ng-show="form.<%= _.camelCase(attr.attrName) %>.$error.max">Must be less than or equal to <%= attr.max %>.</span><% } %>
+                      <% }
+
+                      else if (attr.attrType === "Boolean") { %>
+                      <label class="switch switch-success"><input name="<%= _.camelCase(attr.attrName) %>" ng-checked="<%= name %>.<%= _.camelCase(attr.attrName) %> == 1" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>" type="checkbox"<% if (attr.required) { %> required<% } %>><i></i></input></label>
+                      <% }
+
+                      else if (attr.attrType === "DateTime" || attr.attrType === "Date") { %>
+                      <div class="input-group">
+                          <input class="form-control" close-text="Close" datepicker-options="dateOptions" datepicker-popup="MM/dd/yyyy" is-open="opened" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>" placeholder="<%= _.humanize(attr.attrName) %>" type="text"<% if (attr.required) { %> required<% } %> />
+                          <span class="input-group-addon" ng-click="open($event)"><i class="fa fa-calendar"></i></span>
+                      </div>
+                      <% }
+
+                      else if (attr.attrType === "Enum") { _.each(attr.enumValues, function (value) { %>
+                      <label class="radio"><input type="radio" name="<%= _.camelCase(attr.attrName) %>" value="<%= value %>" ng-model="<%= name %>.<%= _.camelCase(attr.attrName) %>"<% if (attr.required) { %> required<% } %> /> <%= value %></label><% })
+                      } %>
+                  </div>
+              </div>
+              <% }}); %>
+            </form>
+        </div>
+    </section>
+</div>

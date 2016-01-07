@@ -1,6 +1,6 @@
 /**
  * @swagger
- * resourcePath: /<%= baseName %>/<%= pluralize(name) %>
+ * resourcePath: /<%= _.capitalize(name) %>
  * description: All <%= _.capitalize(name) %> API
  */
 
@@ -10,7 +10,7 @@ var db = require('../models'),
 
 /**
  * @swagger
- * path: /<%= baseName %>/<%= pluralize(name) %>
+ * path: /<%= baseName %>/<%= name %>
  * operations:
  *   -  httpMethod: GET
  *      summary: Get list of <%= _.capitalize(name) %>
@@ -41,7 +41,7 @@ var db = require('../models'),
   if (q) {
     query = _.extend({<% var concat = []; _.each(attrs, function (attr) {
       if (attr.attrType === "String" || attr.attrType === "Char" || attr.attrType === "Text") {
-        concat.push(_.underscored(attr.attrName));
+        concat.push(_.camelCase(attr.attrName));
       }
     });%>
     where: ["CONCAT(<%= concat.join(', ') %>) LIKE '%" + q + "%'"]
@@ -63,7 +63,7 @@ var db = require('../models'),
 
 /**
  * @swagger
- * path: /<%= baseName %>/<%= pluralize(name) %>/{id}
+ * path: /<%= baseName %>/<%= name %>/{id}
  * operations:
  *   -  httpMethod: GET
  *      summary: Find a <%= _.capitalize(name) %> by ID
@@ -94,7 +94,7 @@ exports.find = function(req, res) {
 
 /**
  * @swagger
- * path: /<%= baseName %>/<%= pluralize(name) %>
+ * path: /<%= baseName %>/<%= name %>
  * operations:
  *   -  httpMethod: POST
  *      summary: Add a new <%= _.capitalize(name) %>
@@ -125,7 +125,7 @@ exports.create = function(req, res) {
 
 /**
  * @swagger
- * path: /<%= baseName %>/<%= pluralize(name) %>/{id}
+ * path: /<%= baseName %>/<%= name %>/{id}
  * operations:
  *   -  httpMethod: PUT
  *      summary: Update an existing <%= _.capitalize(name) %> by ID
@@ -172,10 +172,10 @@ exports.update = function(req, res) {
 
 /**
  * @swagger
- * path: /<%= baseName %>/<%= pluralize(name) %>/{id}
+ * path: /<%= baseName %>/<%= name %>/{id}
  * operations:
  *   -  httpMethod: DELETE
- *      summary: Delete <%= _.capitalize(name) %> by ID
+ *      summary: Delete a <%= _.capitalize(name) %> by ID
  *      consumes:
  *        - application/json
  *      responseMessages:
@@ -212,6 +212,6 @@ exports.destroy = function(req, res) {
  *   <%= _.capitalize(name) %>:
  *     type: object
  *     properties:
- <% _.each(attrs, function (attr) { %>*       <%= attr.attrName %>:
+ <% _.each(attrs, function (attr) { %>*       <%= _.camelCase(attr.attrName) %>:
  *         type: <%= _.capitalize(attr.attrType) %>
  <% }); %>*/

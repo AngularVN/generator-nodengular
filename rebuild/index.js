@@ -117,6 +117,7 @@ NodengularGenerator.prototype.rebuild = function rebuild() {
     this.template(tpl + 'client/js/_model-controller.js', sourceEntityJsDir + entity.name + '-controller.js');
     this.template(tpl + 'client/js/_model-router.js', sourceEntityJsDir + entity.name + '-router.js');
     this.template(tpl + 'client/js/_model-service.js', sourceEntityJsDir + entity.name + '-service.js');
+    this.template(tpl + 'client/views/_model.html', sourceEntityViewDir + entity.name + '.html');
     this.template(tpl + 'client/views/_models.html', sourceEntityViewDir + pluralize(entity.name) + '.html');
     this.template(tpl + 'client/views/_model-modal.html', sourceEntityViewDir + entity.name + '-modal.html');
   }.bind(this));
