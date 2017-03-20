@@ -1,3 +1,8 @@
+[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://npmjs.org/package/generator-nodengular)
+[![NPM version](http://img.shields.io/npm/v/generator-nodengular.svg?style=flat)](https://npmjs.org/package/generator-nodengular)
+[![NPM version](http://img.shields.io/npm/dm/generator-nodengular.svg?style=flat)](https://npmjs.org/package/generator-nodengular)
+[![Build Status](https://travis-ci.org/AngularVN/generator-nodengular.svg?branch=master)](https://travis-ci.org/AngularVN/generator-nodengular)
+
 # generator-nodengular [![Build Status](https://secure.travis-ci.org/leduong/generator-nodengular.png?branch=master)](https://travis-ci.org/leduong/generator-nodengular)
 
 > [Yeoman](http://yeoman.io) generator
