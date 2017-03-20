@@ -3,7 +3,9 @@
 [![NPM version](http://img.shields.io/npm/dm/generator-nodengular.svg?style=flat)](https://npmjs.org/package/generator-nodengular)
 [![Build Status](https://travis-ci.org/AngularVN/generator-nodengular.svg?branch=master)](https://travis-ci.org/AngularVN/generator-nodengular)
 
-# generator-nodengular [![Build Status](https://secure.travis-ci.org/leduong/generator-nodengular.png?branch=master)](https://travis-ci.org/leduong/generator-nodengular)
+[![NPM](https://nodei.co/npm/generator-nodengular.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/generator-nodengular/)
+
+# AngularJS ExpressJS/SQL Yeoman
 
 > [Yeoman](http://yeoman.io) generator
 
