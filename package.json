@@ -1,10 +1,9 @@
 {
   "name": "generator-nodengular",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "1.0.0",
+  "description": "Yeoman Generator, AngularJS, Node ExpressJS",
   "license": "MIT",
-  "main": "app/index.js",
-  "repository": "leduong/generator-nodengular",
+  "repository": "AngularVN/generator-nodengular",
   "author": {
     "name": "Le Duong",
     "email": "me@leduong.com",
@@ -21,6 +20,9 @@
     "rebuild"
   ],
   "keywords": [
+    "AngularJS",
+    "ExpressJS",
+    "GruntJS",
     "yeoman-generator"
   ],
   "dependencies": {
